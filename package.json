@@ -4,11 +4,14 @@
   "description": "Exercise files for my course Building a Website with Node.js and Express",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "nodemon ./server.js"
   },
   "keywords": [],
-  "author": "Daniel Khan",
+  "author": "Reuben Smith",
   "license": "MIT",
   "devDependencies": {},
-  "dependencies": {}
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4"
+  }
 }
