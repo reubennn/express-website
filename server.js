@@ -5,6 +5,7 @@ const app = express();
 
 const PORT = 3000;
 
+// Middleware
 app.use(express.static(path.join(__dirname, "./static")));
 
 app.get("/", (req, res) => {

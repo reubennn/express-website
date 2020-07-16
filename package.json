@@ -9,7 +9,15 @@
   "keywords": [],
   "author": "Reuben Smith",
   "license": "MIT",
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^7.4.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "^2.0.5"
+  },
   "dependencies": {
     "express": "^4.17.1",
     "nodemon": "^2.0.4"
