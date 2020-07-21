@@ -7,11 +7,21 @@ const router = express.Router(); // Use router to access the express app router
 
 module.exports = params => {
     const { speakersService } = params;
-    router.get("/", async (req, res) => {
-        const topSpeakers = await speakersService.getList();
-        const artwork = await speakersService.getAllArtwork();
-        // console.log(topSpeakers);
-        res.render("layout", { pageTitle: "Welcome", template: "index", topSpeakers, artwork });
+
+    router.get("/", async (req, res, next) => {
+        // return next(new Error("Some error")); // To test the error page
+        try {
+            const topSpeakers = await speakersService.getList();
+            const artwork = await speakersService.getAllArtwork();
+            return res.render("layout", {
+                pageTitle: "Welcome",
+                template: "index",
+                topSpeakers,
+                artwork
+            });
+        } catch (err) {
+            return next(err);
+        }
 
         // Check the visit count
         // if (!req.session.visitcount) {

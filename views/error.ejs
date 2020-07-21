@@ -1,0 +1,52 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%=status%> Error</title>
+    <!-- Include the bootstrap CSS template -->
+    <link
+      href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+      rel="stylesheet"
+      id="bootstrap-css"
+    />
+    <link rel="stylesheet" href="/css/error.css" />
+  </head>
+  <body>
+    <div class="error-content">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="error-text">
+              <h1 class="error"><%=status%> Error</h1>
+              <div class="im-sheep">
+                <div class="top">
+                  <div class="body"></div>
+                  <div class="head">
+                    <div class="im-eye one"></div>
+                    <div class="im-eye two"></div>
+                    <div class="im-ear one"></div>
+                    <div class="im-ear two"></div>
+                  </div>
+                </div>
+                <div class="im-legs">
+                  <div class="im-leg"></div>
+                  <div class="im-leg"></div>
+                  <div class="im-leg"></div>
+                  <div class="im-leg"></div>
+                </div>
+              </div>
+              <h4>Oops! An error occurred!</h4>
+              <p>
+                <% if (status == "404") {%> The page you are looking for does not exist, has been
+                removed or changed name. <%} else {%> Error message: <%=message%> <%}%>
+              </p>
+              <p class="error-details">...It's not you, it's us!</p>
+              <a href="http://localhost:3000/" class="btn btn-primary btn-round">Back to safety!</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <script type="text/javascript" src="../static/js/error.js"></script> -->
+  </body>
+</html>
