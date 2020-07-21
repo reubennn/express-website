@@ -9,8 +9,9 @@ module.exports = params => {
     const { speakersService } = params;
     router.get("/", async (req, res) => {
         const topSpeakers = await speakersService.getList();
+        const artwork = await speakersService.getAllArtwork();
         // console.log(topSpeakers);
-        res.render("layout", { pageTitle: "Welcome", template: "index", topSpeakers });
+        res.render("layout", { pageTitle: "Welcome", template: "index", topSpeakers, artwork });
 
         // Check the visit count
         // if (!req.session.visitcount) {
