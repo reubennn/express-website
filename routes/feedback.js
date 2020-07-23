@@ -5,6 +5,30 @@ const { check, validationResult } = require("express-validator");
 
 const router = express.Router(); // Use router to access the express app router
 
+const validations = [
+    // Validation checks with express-validator
+    check("name")       // Check the name
+        .trim()             // Remove empty characters at beginning and end
+        .isLength({ min: 3 }) // Assume a name should be at least 3 characters long
+        .escape()           // Make sure there is no Javascript or HTML embedded in the entry
+        .withMessage("A name is required."),  // Message returned if something is wrong
+    check("email")       // Check the Email
+        .trim()
+        .isEmail()
+        .normalizeEmail()
+        .withMessage("A valid email address is required."),
+    check("title")       // Check the title
+        .trim()
+        .isLength({ min: 3 })
+        .escape()
+        .withMessage("A title is required."),
+    check("message")       // Check the title
+        .trim()
+        .isLength({ min: 5 })
+        .escape()
+        .withMessage("A message is required."),
+];
+
 module.exports = params => {
     const { feedbackService } = params;
 
@@ -32,30 +56,8 @@ module.exports = params => {
         }
     });
 
-    router.post("/", [
-        // Validation checks with express-validator
-        check("name")       // Check the name
-            .trim()             // Remove empty characters at beginning and end
-            .isLength({ min: 3 }) // Assume a name should be at least 3 characters long
-            .escape()           // Make sure there is no Javascript or HTML embedded in the entry
-            .withMessage("A name is required."),  // Message returned if something is wrong
-        check("email")       // Check the Email
-            .trim()
-            .isEmail()
-            .normalizeEmail()
-            .withMessage("A valid email address is required."),
-        check("title")       // Check the title
-            .trim()
-            .isLength({ min: 3 })
-            .escape()
-            .withMessage("A title is required."),
-        check("message")       // Check the title
-            .trim()
-            .isLength({ min: 5 })
-            .escape()
-            .withMessage("A message is required."),
-    ],
-        async (req, res) => {
+    router.post("/", validations, async (req, res, next) => {
+        try {
             const errors = validationResult(req);
 
             // If an error occurs (the errors array is not empty)
@@ -73,7 +75,28 @@ module.exports = params => {
                 message: "Thank you for your feedback."
             };
             return res.redirect("/feedback");
-        });
+        } catch (err) {
+            return next(err);
+        }
+    });
+
+    router.post("/api", validations, async (req, res, next) => {
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.json({ errors: error.array() });
+            }
+
+            const { name, email, title, message } = req.body;
+            await feedbackService.addEntry(name, email, title, message);
+
+            const feedback = await feedbackService.getList();
+            return res.json({ feedback, successMessage: "Thank you for your feedback." });
+
+        } catch (err) {
+            return next(err);
+        }
+    });
 
     return router;
 };

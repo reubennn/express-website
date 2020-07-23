@@ -27,7 +27,9 @@ app.use(
     })
 );
 
-app.use(bodyParser.urlencoded({ extended: true }));
+// Body Parser middleware
+app.use(bodyParser.urlencoded({ extended: true })); // So we can parse urlencoded data
+app.use(bodyParser.json()); // So we can parse JSON data
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "./views"));
