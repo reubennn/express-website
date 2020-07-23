@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const cookieSession = require("cookie-session");
 const createError = require("http-errors");
+const bodyParser = require("body-parser");
 
 // Import the FeedbackService and SpeakersService classes from the javascript files
 const FeedbackService = require("./services/FeedbackService");
@@ -25,6 +26,8 @@ app.use(
         keys: ["lUAUIhtge51337", "yeet827u5u1hs"],
     })
 );
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "./views"));
